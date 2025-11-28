@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recrutamento Helper FSA | Semi-Anarquia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'VT323', monospace;
+            background-color: #121212;
+            background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
+            color: #dddddd;
+        }
+
+        /* Títulos de Seção */
+        .section-title {
+            color: #fbbf24; /* Amber-400 */
+            text-shadow: 2px 2px 0px #000;
+            border-bottom: 2px solid #444;
+            padding-bottom: 4px;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Minecraft Button Style */
+        .mc-btn {
+            background-color: #727272;
+            border-top: 4px solid #dbdbdb;
+            border-left: 4px solid #dbdbdb;
+            border-right: 4px solid #292929;
+            border-bottom: 4px solid #292929;
+            color: #fff;
+            text-shadow: 2px 2px 0px #000;
+            transition: all 0.1s;
+            image-rendering: pixelated;
+            cursor: pointer;
+        }
+        .mc-btn:active {
+            border-top: 4px solid #292929;
+            border-left: 4px solid #292929;
+            border-right: 4px solid #dbdbdb;
+            border-bottom: 4px solid #dbdbdb;
+            transform: translateY(2px);
+        }
+
+        /* Minecraft Input Style */
+        .mc-input {
+            background-color: #0d0d0d;
+            border: 2px solid #555;
+            color: #fff;
+            outline: none;
+            box-shadow: inset 2px 2px 0px #000;
+        }
+        .mc-input:focus {
+            border-color: #55ff55; /* Minecraft Green */
+            background-color: #1a1a1a;
+        }
+        .mc-input::placeholder {
+            color: #444;
+        }
+
+        /* Checkbox customizada */
+        .mc-checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #000;
+            border: 2px solid #555;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+        }
+        .mc-checkbox:checked {
+            background: #55ff55;
+            border-color: #fff;
+        }
+        .mc-checkbox:checked::after {
+            content: 'X';
+            color: #000;
+            position: absolute;
+            left: 5px;
+            top: 0px;
+            font-weight: bold;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border: 1px solid #000;
+        }
+
+        .dirt-bg {
+            background-image: url('https://loremflickr.com/64/64/dirt,texture/all'); 
+            background-color: #2e2016;
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main Container -->
+    <div class="w-full max-w-4xl bg-neutral-800 border-4 border-black shadow-2xl relative overflow-hidden my-10">
+        
+        <!-- Header -->
+        <div class="bg-neutral-900 p-6 border-b-4 border-black text-center relative dirt-bg">
+            <div class="absolute inset-0 bg-black opacity-70"></div>
+            <div class="relative z-10">
+                <h1 class="text-5xl md:text-6xl text-yellow-400 drop-shadow-[4px_4px_0_rgba(0,0,0,1)] uppercase tracking-wider">
+                    Equipe FSA
+                </h1>
+                <p class="text-2xl text-gray-300 mt-2 text-shadow-sm">Formulário Oficial de Helper</p>
+            </div>
+        </div>
+
+        <!-- Conteúdo do Formulário -->
+        <div class="p-6 md:p-10 space-y-8">
+            
+            <!-- Aviso -->
+            <div class="bg-red-900/20 border-l-4 border-red-600 p-4 text-gray-300">
+                <p class="text-lg">🛑 <strong>LEIA COM ATENÇÃO:</strong> O cargo de Helper não dá criativo ou itens. Sua função é monitorar o chat, tirar dúvidas e reportar hacks. Candidaturas "preguiçosas" serão rejeitadas automaticamente.</p>
+            </div>
+
+            <form id="recruitmentForm" class="space-y-8">
+                
+                <!-- SEÇÃO 1: Dados Pessoais -->
+                <section>
+                    <h2 class="section-title">1. Identidade e Contato</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Nickname (IGN) *</label>
+                            <input type="text" id="ign" required class="mc-input w-full p-3 text-xl" placeholder="Ex: Notch">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Discord Tag *</label>
+                            <input type="text" id="discord" required class="mc-input w-full p-3 text-xl" placeholder="Ex: usuario#1234">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Idade Real *</label>
+                            <input type="number" id="age" required class="mc-input w-full p-3 text-xl" min="13" max="99">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Fuso Horário (Estado/País) *</label>
+                            <input type="text" id="timezone" required class="mc-input w-full p-3 text-xl" placeholder="Ex: Brasília (UTC-3)">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO 2: Equipamento e Histórico -->
+                <section>
+                    <h2 class="section-title">2. Equipamento e Histórico</h2>
+                    <div class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-gray-400 text-xl mb-1">Possui Microfone Funcional? *</label>
+                                <select id="mic" class="mc-input w-full p-3 text-xl">
+                                    <option value="Sim">Sim, funciona bem</option>
+                                    <option value="Sim, mas com ruído">Sim, mas tem ruído</option>
+                                    <option value="Não">Não possuo</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-xl mb-1">Consegue gravar a tela (Evidence)? *</label>
+                                <select id="recording" class="mc-input w-full p-3 text-xl">
+                                    <option value="Sim (OBS/Medal/Outros)">Sim (OBS/Medal/Shadowplay)</option>
+                                    <option value="Não, meu PC não aguenta">Não, meu PC não aguenta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Quanto tempo joga na FSA? *</label>
+                            <input type="text" id="playtime" required class="mc-input w-full p-3 text-xl" placeholder="Ex: Jogo desde o reset passado...">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Já foi Staff em outro servidor? Se sim, detalhe. *</label>
+                            <textarea id="staffHistory" rows="3" required class="mc-input w-full p-3 text-xl" placeholder="Liste servidores, cargos e por quanto tempo..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO 3: Situações Práticas (CRUCIAL) -->
+                <section>
+                    <h2 class="section-title">3. Teste de Situação</h2>
+                    <p class="text-gray-500 mb-4 text-sm italic">Responda como se já fosse Helper.</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-gray-300 text-xl mb-2">A. Um jogador está floodando o chat com ofensas racistas. Não há Mods online. O que você faz?</label>
+                            <textarea id="scenario1" rows="3" required class="mc-input w-full p-3 text-xl" placeholder="Sua ação imediata..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-300 text-xl mb-2">B. Você vê seu melhor amigo no servidor usando Fly/Speed Hack. Ninguém mais viu. Qual sua reação?</label>
+                            <textarea id="scenario2" rows="3" required class="mc-input w-full p-3 text-xl" placeholder="Seja honesto..."></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-300 text-xl mb-2">C. Um jogador acusa outro de roubo/grief, mas não tem provas. Ele pede para você banir o acusado. O que você responde?</label>
+                            <textarea id="scenario3" rows="3" required class="mc-input w-full p-3 text-xl" placeholder="Sua resposta ao jogador..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO 4: Motivação -->
+                <section>
+                    <h2 class="section-title">4. Disponibilidade e Motivação</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Horário Disponível (Ex: Seg-Sex 14h às 18h) *</label>
+                            <input type="text" id="availability" required class="mc-input w-full p-3 text-xl">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xl mb-1">Por que devemos escolher VOCÊ e não outro candidato? *</label>
+                            <textarea id="motivation" rows="4" required class="mc-input w-full p-3 text-xl" placeholder="Venda seu peixe..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Termos -->
+                <div class="bg-black/30 p-4 border border-gray-700 rounded">
+                    <div class="flex items-start space-x-3">
+                        <input type="checkbox" id="terms" required class="mc-checkbox mt-1">
+                        <label for="terms" class="text-gray-400 text-lg leading-tight cursor-pointer select-none">
+                            Declaro que todas as informações acima são verdadeiras. Entendo que pedir cargo no privado da Staff resultará em rejeição imediata.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Botão Enviar -->
+                <button type="submit" id="submitBtn" class="mc-btn w-full py-4 text-2xl font-bold uppercase tracking-widest hover:brightness-110">
+                    Enviar Ficha
+                </button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-neutral-900 p-4 text-center text-gray-600 border-t-4 border-black font-sans text-sm">
+            FSA Semi-Anarquia System &bull; Recrutamento Seguro
+        </div>
+
+        <!-- Modais de Status -->
+        <div id="statusModal" class="hidden absolute inset-0 bg-black/95 flex flex-col items-center justify-center z-50 p-6 text-center">
+            
+            <!-- Loading -->
+            <div id="loadingState">
+                <div class="animate-spin text-6xl mb-4 text-yellow-500">⏳</div>
+                <h2 class="text-4xl text-white mb-2 font-bold">Processando...</h2>
+                <p class="text-xl text-gray-400">Enviando dados para a central...</p>
+            </div>
+
+            <!-- Sucesso -->
+            <div id="successState" class="hidden">
+                <div class="text-6xl mb-4">✅</div>
+                <h2 class="text-4xl text-green-500 mb-2 font-bold">Enviado!</h2>
+                <p class="text-xl text-gray-300 max-w-md mx-auto">Sua candidatura foi recebida. Fique atento ao seu Discord, podemos entrar em contato a qualquer momento.</p>
+                <button onclick="location.reload()" class="mc-btn px-8 py-3 mt-8 text-xl">Voltar ao Início</button>
+            </div>
+
+            <!-- Erro -->
+            <div id="errorState" class="hidden">
+                <div class="text-6xl mb-4">⚠️</div>
+                <h2 class="text-4xl text-red-500 mb-2 font-bold">Erro de Conexão</h2>
+                <p class="text-xl text-gray-300 max-w-md mx-auto" id="errorMessage">Não foi possível contatar o Webhook.</p>
+                <div class="mt-6 text-sm text-gray-500">Dica: Verifique se o dono do site configurou a URL no código.</div>
+                <button onclick="closeModal()" class="mc-btn px-8 py-3 mt-6 text-xl">Tentar Novamente</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ======================================================================
+        // CONFIGURAÇÃO - EDITE AQUI
+        // ======================================================================
+        
+        // COLE SUA URL DO WEBHOOK DO DISCORD DENTRO DAS ASPAS ABAIXO:
+        const DISCORD_WEBHOOK_URL = ""; 
+        
+        // Exemplo: const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/123456/abcdef...";
+        // ======================================================================
+
+        const form = document.getElementById('recruitmentForm');
+        const modal = document.getElementById('statusModal');
+        const loadingState = document.getElementById('loadingState');
+        const successState = document.getElementById('successState');
+        const errorState = document.getElementById('errorState');
+        const errorMessage = document.getElementById('errorMessage');
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validação básica do Webhook no código
+            if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "") {
+                alert("ERRO DE CONFIGURAÇÃO: O dono do site precisa adicionar a URL do Webhook no código HTML (Linha ~235).");
+                return;
+            }
+
+            // Coletar dados
+            const formData = {
+                ign: document.getElementById('ign').value,
+                discord: document.getElementById('discord').value,
+                age: document.getElementById('age').value,
+                timezone: document.getElementById('timezone').value,
+                mic: document.getElementById('mic').value,
+                recording: document.getElementById('recording').value,
+                playtime: document.getElementById('playtime').value,
+                staffHistory: document.getElementById('staffHistory').value,
+                scenario1: document.getElementById('scenario1').value,
+                scenario2: document.getElementById('scenario2').value,
+                scenario3: document.getElementById('scenario3').value,
+                availability: document.getElementById('availability').value,
+                motivation: document.getElementById('motivation').value
+            };
+
+            // Mostrar Loading
+            modal.classList.remove('hidden');
+            loadingState.classList.remove('hidden');
+            successState.classList.add('hidden');
+            errorState.classList.add('hidden');
+
+            // Construir o Payload do Discord (Formatação bonita)
+            const payload = {
+                username: "FSA Recruiter",
+                avatar_url: "https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/bd/Emerald.png",
+                content: "🛡️ **Nova Candidatura de Helper Recebida!**",
+                embeds: [
+                    {
+                        title: `Candidato: ${formData.ign}`,
+                        description: `**Discord:** ${formData.discord}\n**Idade:** ${formData.age} anos\n**Fuso:** ${formData.timezone}`,
+                        color: 16766720, // Gold/Yellow color
+                        fields: [
+                            {
+                                name: "🔧 Equipamento",
+                                value: `**Mic:** ${formData.mic}\n**Gravação:** ${formData.recording}`,
+                                inline: false
+                            },
+                            {
+                                name: "📜 Histórico & Tempo de Jogo",
+                                value: `>>> ${formData.playtime}\n\n*Exp. Staff:* ${formData.staffHistory.substring(0, 100)}...`,
+                                inline: false
+                            },
+                            {
+                                name: "🚨 Teste de Situação",
+                                value: `**A (Racismo):** ${formData.scenario1}\n\n**B (Amigo Hacker):** ${formData.scenario2}\n\n**C (Acusação s/ Prova):** ${formData.scenario3}`,
+                                inline: false
+                            },
+                            {
+                                name: "⏱️ Disponibilidade",
+                                value: formData.availability,
+                                inline: true
+                            },
+                            {
+                                name: "💭 Motivação",
+                                value: `\`\`\`${formData.motivation}\`\`\``,
+                                inline: false
+                            }
+                        ],
+                        footer: {
+                            text: "FSA Recruitment System • ID: " + Math.floor(Math.random() * 10000)
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+
+            // Enviar
+            try {
+                const response = await fetch(https://discord.com/api/webhooks/1421965956824956959/8Ccyhh_TPqOoLhtwiEsEEKfl563rk80KPOdt2bX1kVs1Jao6908QXCHCqPFQvoSXT9_n, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    loadingState.classList.add('hidden');
+                    successState.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                loadingState.classList.add('hidden');
+                errorState.classList.remove('hidden');
+                errorMessage.textContent = "Falha ao enviar. Verifique o Console (F12) para detalhes.";
+                console.error("Erro no envio:", error);
+            }
+        });
+    </script>
+</body>
+</html>
