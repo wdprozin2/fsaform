@@ -347,15 +347,15 @@
 
     </div>
 
-    <script>
+<script>
         // ======================================================================
-        // CONFIGURAÇÃO - EDITE AQUI
+        // CONFIGURAÇÃO SEGURA - WEBHOOK ESCONDIDO
         // ======================================================================
         
-        // COLE SUA URL DO WEBHOOK DO DISCORD DENTRO DAS ASPAS ABAIXO:
-        let DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1444312715135942666/5q7h8rBKdaFsOX6FBHAA_6isSXOxGzWo7jncyWs7-nz835hT-lLdWmCRkIpaxni6UfmU"; 
+        // Coloque aqui a URL do seu CLOUDFLARE WORKER (criado no Passo 1)
+        // NÃO coloque a URL do Discord aqui!
+        const API_URL = "https://fsaform.joaolucasspin.workers.dev"; 
         
-        // Exemplo: let DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/123456/abcdef...";
         // ======================================================================
 
         const form = document.getElementById('recruitmentForm');
@@ -397,7 +397,7 @@
                 step1Indicator.classList.add('text-gray-600');
                 step2Indicator.classList.remove('text-gray-600');
                 step2Indicator.classList.add('text-green-500', 'font-bold');
-                window.scrollTo(0, 0); // Rolar para o topo
+                window.scrollTo(0, 0); 
             } else {
                 alert("Por favor, preencha todos os campos obrigatórios da etapa 1.");
             }
@@ -420,7 +420,6 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Validar campos da Etapa 2 manualmente (já que removemos o 'required' HTML para não conflitar com a aba oculta, ou usamos classe específica)
             const step2Inputs = document.querySelectorAll('.step2-required');
             let isStep2Valid = true;
             step2Inputs.forEach(input => {
@@ -434,17 +433,6 @@
             if (!isStep2Valid) {
                 alert("Por favor, preencha todos os campos da etapa final e aceite os termos.");
                 return;
-            }
-
-            // FALLBACK: Se o usuário esqueceu de colar no código, pede na hora.
-            if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "") {
-                const manualUrl = prompt("⚠️ AVISO DE CONFIGURAÇÃO ⚠️\n\nA URL do Webhook não foi encontrada no código.\nPara testar agora, cole a URL do Webhook do Discord abaixo:");
-                if (manualUrl && manualUrl.startsWith("http")) {
-                    DISCORD_WEBHOOK_URL = manualUrl;
-                } else {
-                    alert("URL inválida ou cancelada. O formulário não será enviado.");
-                    return;
-                }
             }
 
             // Coletar dados
@@ -476,23 +464,24 @@
             successState.classList.add('hidden');
             errorState.classList.add('hidden');
 
-            // Payload
+            // Payload para o Discord
             const payload = {
                 username: "FSA Recruiter",
-                content: "", 
+                content: "Nova aplicação recebida!", 
                 embeds: [
                     {
                         title: "Novo formulário - Helper",
-                        color: 16766720, // Amarelo/Ouro
+                        color: 16766720,
                         fields: [
-                            { name: "Nickname", value: formData.ign, inline: false },
-                            { name: "Idade", value: formData.age, inline: false },
-                            { name: "Discord", value: formData.discord, inline: false },
+                            { name: "Nickname", value: formData.ign, inline: true },
+                            { name: "Idade", value: formData.age, inline: true },
+                            { name: "Discord", value: formData.discord, inline: true },
                             { name: "Fuso Horário", value: formData.timezone, inline: false },
                             
-                            { name: "Microfone", value: formData.mic, inline: false },
-                            { name: "Gravação", value: formData.recording, inline: false },
+                            { name: "Microfone", value: formData.mic, inline: true },
+                            { name: "Gravação", value: formData.recording, inline: true },
                             { name: "Tempo de Jogo", value: formData.playtime, inline: false },
+                            
                             { name: "Histórico Staff", value: formData.staffHistory, inline: false },
                             { name: "Histórico de Bans", value: formData.banHistory, inline: false }, 
                             
@@ -510,15 +499,15 @@
                             { name: "Motivação", value: formData.motivation, inline: false }
                         ],
                         footer: {
-                            text: new Date().toLocaleString('pt-BR')
+                            text: "FSA System • " + new Date().toLocaleString('pt-BR')
                         }
                     }
                 ]
             };
 
-            // Enviar
+            // Enviar para o Cloudflare Worker (que enviará para o Discord)
             try {
-                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -534,12 +523,12 @@
                     window.scrollTo(0,0);
                 } else {
                     const errorText = await response.text();
-                    throw new Error(`Erro Discord (${response.status}): ${errorText}`);
+                    throw new Error(`Erro no envio: ${response.status}`);
                 }
             } catch (error) {
                 loadingState.classList.add('hidden');
                 errorState.classList.remove('hidden');
-                errorMessage.textContent = error.message || "Erro desconhecido ao conectar.";
+                errorMessage.textContent = "Erro ao comunicar com o servidor. Tente novamente mais tarde.";
                 console.error("Erro detalhado:", error);
             }
         });
